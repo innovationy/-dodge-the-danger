@@ -1,0 +1,33 @@
+{
+    "name": " Dodge the danger",
+    "description": "",
+    "dependencies": {
+        "device": "*",
+        "radio": "*",
+        "radio-broadcast": "*"
+    },
+    "files": [
+        "main.blocks",
+        "main.ts",
+        "README.md",
+        "assets.json",
+        "tilemap.g.jres",
+        "tilemap.g.ts",
+        "main.py"
+    ],
+    "testFiles": [
+        "test.ts"
+    ],
+    "targetVersions": {
+        "branch": "v2.0.48",
+        "tag": "v2.0.48",
+        "commits": "https://github.com/microsoft/pxt-arcade/commits/cb1bfd53862604a2129aba2eff909d3bec8826ed",
+        "target": "2.0.48",
+        "pxt": "11.3.51",
+        "targetId": "arcade"
+    },
+    "supportedTargets": [
+        "arcade"
+    ],
+    "preferredEditor": "blocksprj"
+}
