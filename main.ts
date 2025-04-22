@@ -1,14 +1,28 @@
+/**
+ * 初始化部分
+ */
+info.onCountdownEnd(function () {
+    // 倒计时结束时如果玩家存活则胜利
+    game.over(true, effects.confetti)
+    game.splash("You Win!", "Score: " + ("" + info.score()))
+})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
+    // 碰撞后立即结束游戏
     game.over(false, effects.melt)
     mySprite.sayText("GAME OVER", 1000)
+    // 停止所有游戏活动
     music.stopAllSounds()
     sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
 })
 let projectile: Sprite = null
 let mySprite: Sprite = null
+// 设置游戏音乐
 music.play(music.stringPlayable("E B C5 A B G A F ", 120), music.PlaybackMode.LoopingInBackground)
+// 初始化倒计时（30秒）
 info.startCountdown(30)
 info.setScore(0)
+// 初始化分数
+// 创建背景（添加太空背景）
 scene.setBackgroundImage(img`
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999966666699969999999999999999999999999999999999999999999999999999
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
@@ -131,6 +145,7 @@ scene.setBackgroundImage(img`
     4ddddddd4d444dd4dd4ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd4ddddddddddddddddddddddddddddddd4ddddddddddddddddddddddddddddd4ddddddddd
     dddddddddd444ddddd3ddddddddddddd4ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd44dddddddddddddddddddddddddddddddddd4ddddddddd
     `)
+// 创建玩家角色（飞船）
 mySprite = sprites.create(img`
     . . . . . . . 9 9 . . . . . . . 
     . . . . . . 9 9 9 9 . . . . . . 
@@ -144,13 +159,17 @@ mySprite = sprites.create(img`
     . 9 9 9 9 9 9 9 9 9 9 9 9 9 9 . 
     . . . 9 9 9 9 9 9 9 9 9 9 . . . 
     `, SpriteKind.Player)
-controller.moveSprite(mySprite, 100, 0)
+controller.moveSprite(mySprite, 100, 50)
 mySprite.setStayInScreen(true)
 mySprite.setPosition(75, 100)
+// 添加随机水平移动
+// 添加存活时间积分功能（每秒加10分）
 game.onUpdateInterval(1000, function () {
     info.changeScoreBy(1)
 })
+// 调整敌人生成频率（每0.5秒生成一个）
 game.onUpdateInterval(500, function () {
+    // 创建下落的危险物体（陨石）
     projectile = sprites.create(img`
         . . f f f . . . . . . . . . . . 
         f f f c c . . . . . . . . f f f 
@@ -170,5 +189,5 @@ game.onUpdateInterval(500, function () {
         . . . . . . . . . . . . . . . . 
         `, SpriteKind.Enemy)
     projectile.setPosition(randint(0, scene.screenWidth()), 0)
-    projectile.setVelocity(randint(-30, 30), randint(30, 30))
+    projectile.setVelocity(randint(-30, 30), randint(50, 80))
 })
